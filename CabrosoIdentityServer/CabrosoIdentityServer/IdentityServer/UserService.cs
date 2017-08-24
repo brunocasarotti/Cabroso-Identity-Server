@@ -1,7 +1,6 @@
 ﻿using System;
 using CabrosoIdentityServer.Identity;
 using IdentityServer3.AspNetIdentity;
-using Microsoft.AspNet.Identity;
 
 namespace CabrosoIdentityServer.IdentityServer
 {

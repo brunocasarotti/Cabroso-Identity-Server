@@ -184,11 +184,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="IdentityManager\IdentityManagerService.cs" />
+    <Compile Include="IdentityManager\IdentityManagerServiceExtensions.cs" />
     <Compile Include="IdentityServer\Certificate.cs" />
     <Compile Include="IdentityServer\Factory.cs" />
     <Compile Include="IdentityServer\UserService.cs" />
     <Compile Include="IdentityServer\UserServiceExtensions.cs" />
     <Compile Include="Identity\IdentityContext.cs" />
+    <Compile Include="Identity\RoleManager.cs" />
+    <Compile Include="Identity\RoleStore.cs" />
     <Compile Include="Identity\User.cs" />
     <Compile Include="Identity\UserManager.cs" />
     <Compile Include="Identity\UserStore.cs" />

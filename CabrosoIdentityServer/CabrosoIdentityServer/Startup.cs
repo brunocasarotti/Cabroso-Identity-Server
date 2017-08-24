@@ -2,6 +2,8 @@
 using IdentityServer3.Core.Configuration;
 using CabrosoIdentityServer.IdentityServer;
 using System.Collections.Generic;
+using IdentityManager.Configuration;
+using CabrosoIdentityServer.IdentityManager;
 
 namespace CabrosoIdentityServer
 {
@@ -9,6 +11,17 @@ namespace CabrosoIdentityServer
     {
         public void Configuration(IAppBuilder app)
         {
+            app.Map("/manager", managerApp =>
+            {
+                var factory = new IdentityManagerServiceFactory();
+                factory.ConfigureIdentityManagerService("AspId");
+
+                managerApp.UseIdentityManager(new IdentityManagerOptions
+                {
+                    Factory = factory
+                });
+            });
+
             app.Map("/core", core =>
             {
                 var idSvrFactory = IdentityServer.Factory.Configure("AspId");

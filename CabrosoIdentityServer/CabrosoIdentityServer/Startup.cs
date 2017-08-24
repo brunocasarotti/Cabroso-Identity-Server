@@ -4,6 +4,8 @@ using CabrosoIdentityServer.IdentityServer;
 using System.Collections.Generic;
 using IdentityManager.Configuration;
 using CabrosoIdentityServer.IdentityManager;
+using IdentityAdmin.Configuration;
+using CabrosoIdentityServer.IdentityAdmin;
 
 namespace CabrosoIdentityServer
 {
@@ -11,6 +13,17 @@ namespace CabrosoIdentityServer
     {
         public void Configuration(IAppBuilder app)
         {
+            app.Map("/admin", adminApp =>
+            {
+                var factory = new IdentityAdminServiceFactory();
+                factory.Configure("AspId");
+
+                adminApp.UseIdentityAdmin(new IdentityAdminOptions
+                {
+                    Factory = factory
+                });
+            });
+
             app.Map("/manager", managerApp =>
             {
                 var factory = new IdentityManagerServiceFactory();

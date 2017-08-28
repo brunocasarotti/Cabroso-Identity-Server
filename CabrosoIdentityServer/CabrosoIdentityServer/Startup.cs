@@ -1,11 +1,11 @@
-﻿using Owin;
-using IdentityServer3.Core.Configuration;
-using CabrosoIdentityServer.IdentityServer;
-using System.Collections.Generic;
-using IdentityManager.Configuration;
+﻿using CabrosoIdentityServer.IdentityAdmin;
 using CabrosoIdentityServer.IdentityManager;
+using CabrosoIdentityServer.IdentityServer;
 using IdentityAdmin.Configuration;
-using CabrosoIdentityServer.IdentityAdmin;
+using IdentityManager.Configuration;
+using IdentityServer3.Core.Configuration;
+using Owin;
+using System.Collections.Generic;
 
 namespace CabrosoIdentityServer
 {
@@ -37,13 +37,13 @@ namespace CabrosoIdentityServer
 
             app.Map("/core", core =>
             {
-                var idSvrFactory = IdentityServer.Factory.Configure("AspId");
+                var idSvrFactory = Factory.Configure("AspId");
                 idSvrFactory.ConfigureUserService("AspId");
 
                 var options = new IdentityServerOptions
                 {
                     SiteName = "Cabroso Identity Server",
-                    SigningCertificate = IdentityServer.Certificate.Get(),
+                    SigningCertificate = Certificate.Get(),
                     Factory = idSvrFactory,
                     AuthenticationOptions = new AuthenticationOptions
                     {
@@ -53,7 +53,7 @@ namespace CabrosoIdentityServer
                            {
                                Href = "passwordReset",
                                Text = "Reset Your Password",
-                               Type = "resetTestType"
+                               Type = ""
                            }
                         }
                     }

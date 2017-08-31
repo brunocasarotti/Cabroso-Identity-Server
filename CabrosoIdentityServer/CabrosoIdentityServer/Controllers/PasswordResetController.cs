@@ -35,8 +35,8 @@ namespace CabrosoIdentityServer.Controllers
                 return View("Error");
             }
 
-            if (string.IsNullOrWhiteSpace(signInMessage.ClientId))
-                throw new NotImplementedException("ClientId desconhecido");
+            //if (string.IsNullOrWhiteSpace(signInMessage.ClientId))
+            //    throw new NotImplementedException("ClientId desconhecido");
 
             return View(nameof(Index), new PasswordRecovery());
         }
@@ -57,11 +57,26 @@ namespace CabrosoIdentityServer.Controllers
                     throw new NotImplementedException("Email do usuario nao confirmado");
 
                 var token = await userMgr.GeneratePasswordResetTokenAsync(user.Id);
+                var link = string.Format("<a href=\"https://localhost:44333/core/PasswordReset/NewPassword?code={0}&userid={1}\">Click here to reset your password</a>", HttpUtility.UrlEncode(token), user.Id);
 
-                await userMgr.SendEmailAsync(user.Id, "Password reset", string.Format("<a href=\"https://localhost:44333/core/passwordReset/NewPassword?code={0}&userid={1}\">Click here to reset your password</a>", HttpUtility.UrlEncode(token), user.Id));
+                ViewBag.PasswordResetLink = link;
+
+                await userMgr.SendEmailAsync(user.Id, "Password reset", link);
+            }
+            else
+            {
+                ViewBag.PasswordResetLink = null;
             }
 
             return View(nameof(Index), new PasswordRecovery());
+        }
+
+        [HttpGet]
+        [Route("core/PasswordReset/NewPassword")]
+        public async Task<ActionResult> NewPassword(string code, string userid)
+        {
+            //var teste = await userMgr.ResetPasswordAsync(userid, code, "123123");
+            return View(nameof(NewPassword), new NewPassword());
         }
     }
 }
